@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Snapchat Manager</title>
+		<link rel="stylesheet" href="/style/style.css">
+		<script src="/script/jquery.js"></script>
+		<script src="/script/main.js"></script>
+		<script src="/script/dropzone.js"></script>
+	</head>
+	<body class="feed">
+		<div class="appView" id="loader">
+			<img src="/assets/loader.gif" />
+		</div>
+		<div class="appView" id="main">
+			<div class="parts">
+				<div class="section" id="receive">
+					<ul></ul>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		<div class="appView" id="login">
+			<form action="http://localhost:8888/login/" id="loginForm" method="post">
+				<label>Username</label>
+				<input type="text" name="username" class="username">
+				<label>Password</label>
+				<input type="password" name="password" class="password">
+				<input type="submit" value="Login">
+			</form>
+		</div>
+	</body>
+</html>
