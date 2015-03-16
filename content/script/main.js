@@ -17,7 +17,7 @@ var Gdata = {};
 Gdata.lists = [];
 
 var populateSnaps = function() {
-	$.get( "http://localhost/readImages",function(data) {
+	$.get( "/readImages",function(data) {
 
 		var dir = data.dir;
 		var data = data.data;
@@ -40,7 +40,7 @@ var login = function() {
 	$('.appView').hide();
 	$('.appView#loader').show();
 
-	$.post( "http://localhost/login", {}, function(data) {
+	$.post( "/login", {}, function(data) {
 		if(data == 'success') {
 			success('logged in successfuly :)');
 			$('.appView').hide();
@@ -104,7 +104,7 @@ $(document).ready(function() {
 		formData.append("usernames", usernames.join(','));
 
 		$.ajax({
-			url: 'http://localhost/sendFile/',  //Server script to process data
+			url: '/sendFile/',  //Server script to process data
 			type: 'POST',
 			xhr: function() {  // Custom XMLHttpRequest
 				var myXhr = $.ajaxSettings.xhr();
@@ -144,7 +144,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		$('.appView').hide();
 		$('.appView#loader').show();
-		$.get( "http://localhost/download",function(data) {
+		$.get( "/download",function(data) {
 			if(data == 'success') {
 				success('Downloaded latest snaps successfuly :)');
 				populateSnaps();
