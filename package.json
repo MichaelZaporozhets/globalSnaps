@@ -16,7 +16,8 @@
     "stream-sink": "~1.2.0",
     "underscore": "",
     "async" : "",
-    "uuid-v4": "~0.1.0"
+    "uuid-v4": "~0.1.0",
+    "mmmagic": ""
   },
   "devDependencies": {},
   "scripts": {
