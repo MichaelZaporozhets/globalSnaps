@@ -192,7 +192,7 @@ var getUserData = function(callback) {
 
 
 var fs = require("fs");
-var port = 8888;
+var port = process.env.PORT || 3000;
 var express = require("express");
 
 var app = express();
