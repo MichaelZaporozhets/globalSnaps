@@ -16,84 +16,8 @@ var success = function(str) {
 var Gdata = {};
 Gdata.lists = [];
 
-var populateLists = function() {
-	var finish = function() {
-		$('select').empty();
-		for(i in Gdata.lists) {
-			$('select').append('<option>'+Gdata.lists[i].name+'</option>');
-			if(i == Gdata.lists.length-1) {
-				$('.appView#main .parts .section#lists select').trigger('change');
-			}
-		}
-		$('form#sendFile select').append('<option>Username</option>');
-	}
-	$.get('http://localhost:8888/readUserData',function(data) {
-		var list = '';
-		for(i in data.friends) {
-			list = list + data.friends[i].name+','
-		};
-
-		var obj = {
-			name: 'friends',
-			rec_list: list.trim().split(',')
-		}
-
-		Gdata.lists.push(obj);
-		$.get('../lists/set.txt',function(data) {
-			var lists = data.trim().split(',');
-			for(i in lists) {
-				if(lists[i].length > 0) {
-					var name = lists[i];
-					$.get('../lists/'+lists[i],function(data) {
-						var obj = {
-							name: name,
-							rec_list: data.trim().split(',')
-						}
-						Gdata.lists.push(obj);
-						if(i == lists.length-1) {
-							finish();
-						}
-					});
-				}
-			}
-		});
-
-
-		var contactRequests = data.requests.filter(function(request) {
-			return request.type == 1 && request.direction == 'INCOMING';
-		});
-
-		for(i in contactRequests) {
-			$('.section#other ul.requests').append(
-				'<li>' +
-				'<span class="name">'+contactRequests[i].name+'</span>' +
-				'<span class="actions">' +
-				'<a href="#" class="add">+</a>' +
-				'</span>' +
-				'</li>'
-			)
-		}
-
-
-		$('.section#other ul.requests li .add').click(function() {
-			var item = $(this).parents('li');
-			$('.appView').hide();
-			$('.appView#loader').show();
-			$.get('http://localhost:8888/addUser/'+ item.find('.name').text().toLowerCase(),function(data) {
-				if(!data.message.indexOf('is now your friend') == -1) {
-					alert(JSON.stringify(data))
-				} else {
-					item.remove();
-					$('.appView').hide();
-					$('.appView#other').show();
-				}
-			});
-		});
-
-	});
-}
 var populateSnaps = function() {
-	$.get( "http://localhost:8888/readImages",function(data) {
+	$.get( "http://localhost/readImages",function(data) {
 
 		var dir = data.dir;
 		var data = data.data;
@@ -116,7 +40,7 @@ var login = function() {
 	$('.appView').hide();
 	$('.appView#loader').show();
 
-	$.post( "http://localhost:8888/login", {}, function(data) {
+	$.post( "http://localhost/login", {}, function(data) {
 		if(data == 'success') {
 			success('logged in successfuly :)');
 			$('.appView').hide();
@@ -180,7 +104,7 @@ $(document).ready(function() {
 		formData.append("usernames", usernames.join(','));
 
 		$.ajax({
-			url: 'http://localhost:8888/sendFile/',  //Server script to process data
+			url: 'http://localhost/sendFile/',  //Server script to process data
 			type: 'POST',
 			xhr: function() {  // Custom XMLHttpRequest
 				var myXhr = $.ajaxSettings.xhr();
@@ -220,7 +144,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		$('.appView').hide();
 		$('.appView#loader').show();
-		$.get( "http://localhost:8888/download",function(data) {
+		$.get( "http://localhost/download",function(data) {
 			if(data == 'success') {
 				success('Downloaded latest snaps successfuly :)');
 				populateSnaps();
